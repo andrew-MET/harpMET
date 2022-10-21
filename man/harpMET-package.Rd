@@ -8,6 +8,14 @@
 \description{
 Includes wrappers to harp functions with some things hard coded for MET Norway
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/andrew-MET/harpMET}
+  \item Report bugs at \url{https://github.com/andrew-MET/harpMET/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Andrew Singleton \email{andrewts@met.no}
 
