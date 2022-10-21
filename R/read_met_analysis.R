@@ -49,7 +49,7 @@ read_met_analysis <- function(
 
   ma_path = "/lustre/storeB/immutable/archive/projects/metproduction/yr_short"
   ma_template = "{YYYY}/{MM}/{DD}/met_analysis_1_0km_nordic_{YYYY}{MM}{DD}T{HH}Z.nc"
-  ma_opts = netcdf_opts(proj4_var = "projection_lcc")
+  ma_opts = harpIO::netcdf_opts(proj4_var = "projection_lcc")
 
   isPcp <- FALSE
   if (parameter == "Pcp") {
