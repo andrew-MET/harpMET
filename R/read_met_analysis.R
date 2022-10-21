@@ -51,9 +51,8 @@ read_met_analysis <- function(
   ma_template = "{YYYY}/{MM}/{DD}/met_analysis_1_0km_nordic_{YYYY}{MM}{DD}T{HH}Z.nc"
   ma_opts = harpIO::netcdf_opts(proj4_var = "projection_lcc")
 
-  isPcp <- FALSE
-  if (parameter == "Pcp") {
-    isPcp     <- TRUE
+  if (tolower(parameter) == "pcp") {
+    pcp_name  <- parameter
     parameter <- "precipitation_amount"
   }
 
@@ -70,8 +69,8 @@ read_met_analysis <- function(
     show_progress       = show_progress
   )
 
-  if (isPcp) {
-    res[[1]] <- dplyr::mutate(res[[1]], parameter = "Pcp")
+  if (exists("pcp_name")) {
+    res[[1]] <- dplyr::mutate(res[[1]], parameter = pcp_name)
   }
 
   res
