@@ -1,6 +1,6 @@
-#' Read forecast data from MEPS
+#' Read ensemble forecast data from the ALERTNESS project
 #'
-#' Calls read_forecast from harpIO with paths for MEPS.
+#' Calls read_forecast from harpIO with paths for Alertness experiments.
 #'
 #' @param date_times A vector of date time strings to read. Can be in YYYYMMDD,
 #'   YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
@@ -10,6 +10,11 @@
 #'   files. Should either be harp parameter names (see show_harp_parameters), or
 #'   in the case of netcdf files can be the name of the parameters in the files.
 #'   If reading from vfld files, set to NULL to read all parameters.
+#' @param file_type Which type of file to read from: "fp" for atmospheric data
+#'   that have been through the 'fullpos' processing (most useful data are in
+#'   here), "full" for raw output on model levels (and some other stuff), "sfx"
+#'   for output from SURFEX and "sfx_full" for full output from surfex.
+#' @param experimnet The Alertness experiment
 #' @param lead_time A vector of lead times to read
 #' @param members A vector of members to read
 #' @param vertical_coordinate The vertical co-ordinate for upper air parameters.
@@ -40,10 +45,12 @@
 #'   members = c(0, 14),
 #'   return_data = TRUE
 #' )
-read_meps <- function(
+read_alertnes <- function(
   date_times,
   parameter,
-  lead_time = seq(0, 66, 3),
+  file_type = c("fp", "full", "sfx", "sfx_full"),
+  experiment = c("REF", "SPP", "REF43", "EDA43", "TSSTP"),
+  lead_time = seq(0, 48, 3),
   members   = NULL,
   vertical_coordinate = c("pressure", "model", "height", NA),
   transformation = c("none", "interpolate", "regrid", "xsection", "subgrid"),
@@ -53,23 +60,30 @@ read_meps <- function(
   show_progress = TRUE
 ) {
 
+  file_type <- match.arg(file_type)
+  file_type <- paste0("_", file_type)
+  if (file_type == "_full") file_type <- ""
+  experiment <- match.arg(experiment)
+  fcst_model <- gsub("[[:digit:]]+", "", experiment)
   vertical_coordinate <- match.arg(vertical_coordinate)
   transformation <- match.arg(transformation)
 
-  meps_path <- "/lustre/storeB/immutable/archive/projects/metproduction/meps"
-  meps_template <- "{YYYY}/{MM}/{DD}/meps_lagged_6_h_subset_2_5km_{YYYY}{MM}{DD}T{HH}Z.nc"
-  meps_opts <- harpIO::netcdf_opts("met_norway_eps")
+  alert_path <- file.path(
+    "/lustre/storeB/project/nwp/alertness/wp4", experiment, "netcdf"
+  )
+  alert_template <- paste0("fc{YYYY}{MM}{DD}{HH}", file_type, ".nc")
+  alert_opts <- harpIO::netcdf_opts("met_norway_eps")
 
   harpIO::read_forecast(
     date_times          = date_times,
-    fcst_model          = "meps",
+    fcst_model          = fcst_model,
     parameter           = parameter,
     lead_time           = lead_time,
     members             = members,
     vertical_coordinate = vertical_coordinate,
-    file_path           = meps_path,
-    file_template       = meps_template,
-    file_format_opts    = meps_opts,
+    file_path           = alert_path,
+    file_template       = alert_template,
+    file_format_opts    = alert_opts,
     transformation      = transformation,
     transformation_opts = transformation_opts,
     output_file_opts    = output_file_opts,

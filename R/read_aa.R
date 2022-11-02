@@ -1,6 +1,6 @@
-#' Read forecast data from MEPS
+#' Read deterministic forecast data from AROME-Arctic
 #'
-#' Calls read_forecast from harpIO with paths for MEPS.
+#' Calls read_forecast from harpIO with paths for AROME-Arctic.
 #'
 #' @param date_times A vector of date time strings to read. Can be in YYYYMMDD,
 #'   YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
@@ -11,7 +11,6 @@
 #'   in the case of netcdf files can be the name of the parameters in the files.
 #'   If reading from vfld files, set to NULL to read all parameters.
 #' @param lead_time A vector of lead times to read
-#' @param members A vector of members to read
 #' @param vertical_coordinate The vertical co-ordinate for upper air parameters.
 #'   Can be "pressure", "model", or "height".
 #' @param transformation The transformation to apply to 2d fields. Can be
@@ -40,11 +39,10 @@
 #'   members = c(0, 14),
 #'   return_data = TRUE
 #' )
-read_meps <- function(
+read_aa <- function(
   date_times,
   parameter,
   lead_time = seq(0, 66, 3),
-  members   = NULL,
   vertical_coordinate = c("pressure", "model", "height", NA),
   transformation = c("none", "interpolate", "regrid", "xsection", "subgrid"),
   transformation_opts = NULL,
@@ -56,20 +54,19 @@ read_meps <- function(
   vertical_coordinate <- match.arg(vertical_coordinate)
   transformation <- match.arg(transformation)
 
-  meps_path <- "/lustre/storeB/immutable/archive/projects/metproduction/meps"
-  meps_template <- "{YYYY}/{MM}/{DD}/meps_lagged_6_h_subset_2_5km_{YYYY}{MM}{DD}T{HH}Z.nc"
-  meps_opts <- harpIO::netcdf_opts("met_norway_eps")
+  aa_path <- "/lustre/storeB/immutable/archive/projects/metproduction/DNMI_AROME_ARCTIC"
+  aa_template <- "{YYYY}/{MM}/{DD}/arome_arctic_det_2_5km_{YYYY}{MM}{DD}T{HH}Z.nc"
+  aa_opts <- harpIO::netcdf_opts("met_norway_det")
 
   harpIO::read_forecast(
     date_times          = date_times,
-    fcst_model          = "meps",
+    fcst_model          = "arome_arctic",
     parameter           = parameter,
     lead_time           = lead_time,
-    members             = members,
     vertical_coordinate = vertical_coordinate,
-    file_path           = meps_path,
-    file_template       = meps_template,
-    file_format_opts    = meps_opts,
+    file_path           = aa_path,
+    file_template       = aa_template,
+    file_format_opts    = aa_opts,
     transformation      = transformation,
     transformation_opts = transformation_opts,
     output_file_opts    = output_file_opts,
