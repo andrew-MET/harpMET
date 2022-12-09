@@ -45,11 +45,11 @@
 #'   members = c(0, 14),
 #'   return_data = TRUE
 #' )
-read_alertnes <- function(
+read_alertness <- function(
   date_times,
   parameter,
   file_type = c("fp", "full", "sfx", "sfx_full"),
-  experiment = c("REF", "SPP", "REF43", "EDA43", "TSSTP"),
+  experiment = c("REF", "SPP", "REF43", "EDA43", "TSSTP", "TSSTP_weekly_pert", "REF_SST"),
   lead_time = seq(0, 48, 3),
   members   = NULL,
   vertical_coordinate = c("pressure", "model", "height", NA),
