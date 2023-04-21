@@ -5,7 +5,7 @@
 \title{Read deterministic forecast data from AROME-Arctic}
 \usage{
 read_aa(
-  date_times,
+  dttm,
   parameter,
   lead_time = seq(0, 66, 3),
   vertical_coordinate = c("pressure", "model", "height", NA),
@@ -17,10 +17,9 @@ read_aa(
 )
 }
 \arguments{
-\item{date_times}{A vector of date time strings to read. Can be in YYYYMMDD,
+\item{dttm}{A vector of date time strings to read. Can be in YYYYMMDD,
 YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
-character. If date_times is not NULL, start_date, end_date and by are
-ignored.}
+character.}
 
 \item{parameter}{The name of the forecast parameter(s) to read from the
 files. Should either be harp parameter names (see show_harp_parameters), or

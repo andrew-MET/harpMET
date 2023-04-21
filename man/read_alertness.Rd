@@ -5,11 +5,11 @@
 \title{Read ensemble forecast data from the ALERTNESS project}
 \usage{
 read_alertness(
-  date_times,
+  dttm,
   parameter,
   file_type = c("fp", "full", "sfx", "sfx_full"),
-  experiment = c("REF", "SPP", "REF43", "EDA43", "TSSTP", "TSSTP_weekly_pert",
-    "REF_SST", "OP_SST"),
+  experiment = c("REF", "SPP", "REF43", "EDA43", "TSSTP", "TSSTP_weekly_pert", "REF_SST",
+    "OP_SST"),
   lead_time = seq(0, 48, 3),
   members = NULL,
   vertical_coordinate = c("pressure", "model", "height", NA),
@@ -21,10 +21,9 @@ read_alertness(
 )
 }
 \arguments{
-\item{date_times}{A vector of date time strings to read. Can be in YYYYMMDD,
+\item{dttm}{A vector of date time strings to read. Can be in YYYYMMDD,
 YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
-character. If date_times is not NULL, start_date, end_date and by are
-ignored.}
+character.}
 
 \item{parameter}{The name of the forecast parameter(s) to read from the
 files. Should either be harp parameter names (see show_harp_parameters), or

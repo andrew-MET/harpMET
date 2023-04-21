@@ -2,10 +2,9 @@
 #'
 #' Calls read_analysis from harpIO with paths for the MET analysis.
 #'
-#' @param date_times A vector of date time strings to read. Can be in YYYYMMDD,
+#' @param dttm A vector of date time strings to read. Can be in YYYYMMDD,
 #'   YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
-#'   character. If date_times is not NULL, start_date, end_date and by are
-#'   ignored.
+#'   character.
 #' @param parameter The name of the forecast parameter(s) to read from the
 #'   files. Should either be harp parameter names (see show_harp_parameters), or
 #'   in the case of netcdf files can be the name of the parameters in the files.
@@ -37,7 +36,7 @@
 #' )
 
 read_met_analysis <- function(
-  date_times,
+  dttm,
   parameter,
   transformation = c("none", "interpolate", "regrid", "xsection", "subgrid"),
   transformation_opts = NULL,
@@ -57,7 +56,7 @@ read_met_analysis <- function(
   }
 
   res <- harpIO::read_analysis(
-    date_times          = date_times,
+    dttm                = dttm,
     analysis_model      = "met_analysis",
     parameter           = parameter,
     file_path           = ma_path,

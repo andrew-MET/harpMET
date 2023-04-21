@@ -5,7 +5,7 @@
 \title{Read 2d fields from the MET Norway 1km Nordic Analysis}
 \usage{
 read_met_analysis(
-  date_times,
+  dttm,
   parameter,
   transformation = c("none", "interpolate", "regrid", "xsection", "subgrid"),
   transformation_opts = NULL,
@@ -14,10 +14,9 @@ read_met_analysis(
 )
 }
 \arguments{
-\item{date_times}{A vector of date time strings to read. Can be in YYYYMMDD,
+\item{dttm}{A vector of date time strings to read. Can be in YYYYMMDD,
 YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
-character. If date_times is not NULL, start_date, end_date and by are
-ignored.}
+character.}
 
 \item{parameter}{The name of the forecast parameter(s) to read from the
 files. Should either be harp parameter names (see show_harp_parameters), or

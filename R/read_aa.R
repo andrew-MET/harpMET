@@ -2,10 +2,9 @@
 #'
 #' Calls read_forecast from harpIO with paths for AROME-Arctic.
 #'
-#' @param date_times A vector of date time strings to read. Can be in YYYYMMDD,
+#' @param dttm A vector of date time strings to read. Can be in YYYYMMDD,
 #'   YYYYMMDDhh, YYYYMMDDhhmm, or YYYYMMDDhhmmss format. Can be numeric or
-#'   character. If date_times is not NULL, start_date, end_date and by are
-#'   ignored.
+#'   character.
 #' @param parameter The name of the forecast parameter(s) to read from the
 #'   files. Should either be harp parameter names (see show_harp_parameters), or
 #'   in the case of netcdf files can be the name of the parameters in the files.
@@ -40,7 +39,7 @@
 #'   return_data = TRUE
 #' )
 read_aa <- function(
-  date_times,
+  dttm,
   parameter,
   lead_time = seq(0, 66, 3),
   vertical_coordinate = c("pressure", "model", "height", NA),
@@ -59,7 +58,7 @@ read_aa <- function(
   aa_opts <- harpIO::netcdf_opts("met_norway_det")
 
   harpIO::read_forecast(
-    date_times          = date_times,
+    dttm                = dttm,
     fcst_model          = "arome_arctic",
     parameter           = parameter,
     lead_time           = lead_time,
